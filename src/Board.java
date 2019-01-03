@@ -23,13 +23,13 @@ public class Board {
         }
     }
 
-    public void getMaze() {
+    public List<Cell> getMaze() {
         initializeBoard();
         generateMaze(0, 0);
-        printMaze();
-        System.out.println("--------------------------------------");
         resetDuplicatedWalls();
-        printMaze();
+        printCells(3, 3);
+
+        return cells;
     }
 
     public Boolean generateMaze(int x, int y) {
@@ -128,13 +128,16 @@ public class Board {
                     System.out.print("1");
                 }
                 System.out.println("");
-                System.out.print("----");
+                System.out.println("----");
             }
         }
     }
 
     private Cell getCell(int x, int y) {
         int i = y * width + x;
+        cells.get(i).x = x;
+        cells.get(i).y = y;
+
         if (i > cells.size() - 1 || x < 0 || y < 0) {
             return null;
         }
@@ -218,4 +221,46 @@ public class Board {
             }
         }
     }
+
+    private void printCells(int x, int y) {
+
+        for (int j = y - 1; j >= 0; j--) {
+
+            for (int k = 0; k < x; k++) {
+                Cell cell = getCell(k, j);
+                if (cell.cellWalls.east && cell.cellWalls.west && cell.cellWalls.north) {
+                    System.out.print("|⎺⎺⎺|");
+                } else if (cell.cellWalls.east && cell.cellWalls.west && cell.cellWalls.south) {
+                    System.out.print("|___|");
+                } else if (cell.cellWalls.west && cell.cellWalls.north && cell.cellWalls.south) {
+                    System.out.print("|⼆⼆⼆");
+                } else if (cell.cellWalls.east && cell.cellWalls.north && cell.cellWalls.south) {
+                    System.out.print("⼆⼆⼆|");
+                } else if (cell.cellWalls.east && cell.cellWalls.south) {
+                    System.out.print("___|");
+                } else if (cell.cellWalls.west && cell.cellWalls.south) {
+                    System.out.print("|___");
+                } else if (cell.cellWalls.east && cell.cellWalls.north) {
+                    System.out.print("⎺⎺⎺|");
+                } else if (cell.cellWalls.west && cell.cellWalls.north) {
+                    System.out.print("|⎺⎺⎺");
+                } else if (cell.cellWalls.west && cell.cellWalls.east) {
+                    System.out.print("|   |");
+                } else if (cell.cellWalls.south && cell.cellWalls.north) {
+                    System.out.print("⼆⼆⼆");
+                } else if (cell.cellWalls.south) {
+                    System.out.print("___");
+                } else if (cell.cellWalls.east) {
+                    System.out.print("   |");
+                } else if (cell.cellWalls.west) {
+                    System.out.print("|  ");
+                } else if (cell.cellWalls.north) {
+                    System.out.print("⎺⎺⎺");
+                }
+            }
+            System.out.println(" ");
+        }
+
+    }
+
 }
