@@ -4,9 +4,11 @@ public class Executer {
         Board board = new Board(2, 2);
         board.initializeBoard();
         board.generateMaze(0, 0);
-        board.printCellWalls();
         board.printMaze();
-        //board.printCellWalls();
+        System.out.println("------------------------------");
+        board.resetDuplicatedWalls();
+        board.printMaze();
+
     }
 
 }

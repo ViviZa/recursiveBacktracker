@@ -4,4 +4,5 @@ public class Wall {
     public Boolean south = true;
     public Boolean east = true;
     public Boolean west = true;
+
 }
