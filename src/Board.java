@@ -23,6 +23,15 @@ public class Board {
         }
     }
 
+    public void getMaze() {
+        initializeBoard();
+        generateMaze(0, 0);
+        printMaze();
+        System.out.println("--------------------------------------");
+        resetDuplicatedWalls();
+        printMaze();
+    }
+
     public Boolean generateMaze(int x, int y) {
         Cell currentCell = getCell(x, y);
         if (currentCell.visited == true) {
@@ -182,25 +191,28 @@ public class Board {
             for (int j = 0; j < height; j++) {
 
                 Cell currentCell = getCell(i, j);
+                List<Cell> cellNeighbors = getCellNeighbors(i, j);
 
-                if (getCell(i, j + 1) != null) {
-                    if (currentCell.cellWalls.north == true && getCell(i, j + 1).cellWalls.south == true) {
-                        currentCell.cellWalls.north = false;
+                for (Cell cell : cellNeighbors) {
+                    if (cell.type == NeighborType.North) {
+                        if (cell.cellWalls.south == true && currentCell.cellWalls.north == true) {
+                            currentCell.cellWalls.north = false;
+                        }
                     }
-                }
-                if (getCell(i, j - 1) != null) {
-                    if (currentCell.cellWalls.south == true && getCell(i, j - 1).cellWalls.north == true) {
-                        currentCell.cellWalls.south = false;
+                    if (cell.type == NeighborType.South) {
+                        if (cell.cellWalls.north == true && currentCell.cellWalls.south == true) {
+                            currentCell.cellWalls.south = false;
+                        }
                     }
-                }
-                if (getCell(i + 1, j) != null) {
-                    if (currentCell.cellWalls.east == true && getCell(i + 1, j).cellWalls.west == true) {
-                        currentCell.cellWalls.east = false;
+                    if (cell.type == NeighborType.East) {
+                        if (cell.cellWalls.west == true && currentCell.cellWalls.east == true) {
+                            currentCell.cellWalls.east = false;
+                        }
                     }
-                }
-                if (getCell(i - 1, j) != null) {
-                    if (currentCell.cellWalls.west == true && getCell(i - 1, j).cellWalls.east == true) {
-                        currentCell.cellWalls.west = false;
+                    if (cell.type == NeighborType.West) {
+                        if (cell.cellWalls.east == true && currentCell.cellWalls.west == true) {
+                            currentCell.cellWalls.west = false;
+                        }
                     }
                 }
             }
