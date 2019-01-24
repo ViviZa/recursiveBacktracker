@@ -95,48 +95,8 @@ public class Board {
         return false;
     }
 
-    public void printMaze() {
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-
-                Cell currentCell = getCell(i, j);
-                System.out.println("current Cell at x: " + i + " at y: " + j);
-                System.out.println("Wall north: " + currentCell.cellWalls.north);
-                System.out.println("Wall south: " + currentCell.cellWalls.south);
-                System.out.println("Wall east: " + currentCell.cellWalls.east);
-                System.out.println("Wall west: " + currentCell.cellWalls.west);
-
-                if (!currentCell.cellWalls.north) {
-                    System.out.print("0");
-                } else {
-                    System.out.print("1");
-                }
-                if (!currentCell.cellWalls.east) {
-                    System.out.print("0");
-                } else {
-                    System.out.print("1");
-                }
-                if (!currentCell.cellWalls.west) {
-                    System.out.print("0");
-                } else {
-                    System.out.print("1");
-                }
-                if (!currentCell.cellWalls.south) {
-                    System.out.print("0");
-                } else {
-                    System.out.print("1");
-                }
-                System.out.println("");
-                System.out.println("----");
-            }
-        }
-    }
-
     private Cell getCell(int x, int y) {
         int i = y * width + x;
-        cells.get(i).x = x;
-        cells.get(i).y = y;
 
         if (i > cells.size() - 1 || x < 0 || y < 0) {
             return null;
